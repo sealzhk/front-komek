@@ -1,0 +1,33 @@
+<div class="bg-white py-3">
+    <div class="container py-5">
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-6 order-2 order-lg-1">
+          <h2 class="font-weight-light">{{category.name}}</h2>
+          <p class="font-italic text-muted mb-4">{{category.details}}</p>
+          <button class="btn-success shadow-lg mt-4" routerLink="/fundraiser">Start Fundraising</button> 
+          <button *ngIf = "_authService.loggedIn() && user.userRole == 1" 
+                  routerLink="/editcategory/{{category._id}}"
+                  class="btn-primary shadow-lg mt-4 ml-5">Edit Category</button>                 
+        </div>
+        <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="{{category.imagePath}}" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+      </div>
+    </div>
+</div>
+<hr>
+<div class="row mt-5 mb-5">
+    <div class="col-4 mb-3" *ngFor="let fundraising of filterFundraisings()">
+        <div class="card shadow-lg rounded justify-content-center" style="width: 18rem;">
+            <img class="card-img-top" src="{{fundraising.imagePath}}" alt="Card image cap">
+            <div class="card-body" style="height: 10rem;">
+              <h5 class="card-title">{{fundraising.title | slice: 0: 22}}<b *ngIf="fundraising.title.length > 22">....</b></h5>
+              <p class="card-text">{{fundraising.details | slice: 0: 85}}<i *ngIf="fundraising.details.length > 85">...</i></p>
+            </div>
+            <div class="card-footer">
+            <p>Last donation {{getLastDonationDate(fundraising._id)}}</p>
+            <p class="txt">₸{{getDonationSum(fundraising._id)}} raised of ₸{{getAmount(fundraising.amount_goal)}}</p>
+            <input type="range" class="form-control-range" min="0" max="100" step="1" [value]="getTotalPercent(fundraising._id,fundraising.amount_goal)" disabled>
+            </div>
+            <a href="/fundraising/{{fundraising._id}}" class="stretched-link"></a>
+        </div>
+    </div>
+</div>

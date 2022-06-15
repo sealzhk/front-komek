@@ -1,0 +1,120 @@
+<section class="card1">
+    <div class="row mt-5">
+      <div class="col-md-7 col-lg-7 col-xl-6 mb-4 mb-md-0">
+        <img class="card-img-top rounded" src="{{fundraising.imagePath}}" alt="Card image cap" height="200px" weight="420px">
+        <h5 class="mb-3">You’re supporting {{fundraising.title}} by {{fundraiserUser.firstname}} {{fundraiserUser.lastname}}</h5>
+        <div>
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row mt-1">
+              <h6 style="color:#969699">Your donation will benefit {{fundraiserUser.firstname}} {{fundraiserUser.lastname}}</h6><br>
+  
+            </div>
+            <div class="d-flex flex-row align-items-center text-primary">
+            </div>
+          </div>
+  
+          <div class="input-group input-group-lg mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">₸</span>
+            </div>
+            <input type="number" [(ngModel)]="checkout.donation" class="form-control" aria-label="Amount (to the nearest dollar)" (change)="onChangeDonation($event)">
+            <div class="input-group-append">
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-row mt-1">
+              <h4>Tip Service</h4>
+  
+            </div>
+  
+          </div>
+          <p>
+            Kömek has a 5% platform fee for organizers. Kömek will continue offering its services thanks to donors who will leave an optional amount here:
+          </p>
+          <div class="form-group">
+            <input type="range" class="form-control-range" [(ngModel)]="range" min="0" max="20" step="5" value="5" (change)="onChangeRange($event)">
+            <span id="rangeval">{{range}}%</span>
+          </div>
+          <div class="d-flex flex-column mb-3">
+            <div class="card">
+                <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6"> <span>CREDIT/DEBIT CARD PAYMENT</span> </div>
+                    <div class="col-md-6 text-right" style="margin-top: -5px;"> <img src="https://img.icons8.com/color/36/000000/visa.png"> <img src="https://img.icons8.com/color/36/000000/mastercard.png">  </div>
+                </div>
+                </div>
+                <div class="card-body">
+                <div class="form-group"> 
+                    <label for="cc-number" class="control-label">Card Number</label> 
+                    <input id="cc-number" type="text" minlength="19" maxlength="19" [(ngModel)]="checkout.card_num" (ngModelChange)="onChangeCard($event)" class="input-lg form-control cc-number" 
+                           autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required> 
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label for="cc-exp" class="control-label">Card Expiry</label> 
+                        <input id="cc-exp" type="text" minlength="5" maxlength="5" [(ngModel)]="checkout.expiry" (ngModelChange)="onChangeExpiry($event)" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="MM/YY" required> 
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label for="cc-cvc" class="control-label">Card CVC/CVV</label> 
+                        <input id="cc-cvc" type="password" minlength="3" maxlength="3" [(ngModel)]="checkout.cvv" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="•••" required> 
+                    </div>
+                    </div>
+                </div>
+                <form class="form">
+                <div class="form-group"> 
+                    <label for="cardname" class="control-label">Card Holder Name</label> 
+                    <input type="text" [(ngModel)]="checkout.card_holder" class="input-lg form-control" name="card_holder" placeholder="First and Last Names"> 
+                </div>
+                <div class="form-group"> 
+                    <label for="email" class="control-label">Email</label> 
+                    <input type="text" [(ngModel)]="checkout.email" class="input-lg form-control" name="email" placeholder="Email"> 
+                </div>
+                </form>
+                </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column mb-3">
+            <div class="card">
+                <div class="card-header">
+                <div class="row">
+                    <span class="ml-3">YOUR NAME AND WORDS OF SUPPORT</span> 
+                </div>
+                </div>
+                <div class="card-body">
+                  <div class="form-group"> 
+                      <label for="donater" class="control-label">You can left it empty to donate <b>anonymously</b></label> 
+                      <input id="donater" type="text" [(ngModel)]="checkout.donater" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="Donater's name" required> 
+                  </div>
+                  <div class="form-group"> 
+                      <label for="cardname" class="control-label">You can left it empty</label> 
+                      <textarea class="form-control" [(ngModel)]="checkout.comment" rows="3" placeholder="Words of support"></textarea>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="btn btn-success btn-lg btn-block" (click)="makeDonation()">Proceed to payment</div>
+        </div>
+      </div>
+      <div class="col-md-5 col-lg-4 col-xl-4 offset-lg-1 offset-xl-2">
+        <div class="p-3" style="background-color: #eee;">
+          <span class="font-weight-bold">Checkout</span>
+          <div class="d-flex justify-content-between mt-2">
+            <span>Your donation</span> <span>₸{{checkout.donation}}</span>
+          </div>
+          <div class="d-flex justify-content-between mt-2">
+            <span>Kömek tip</span> <span>₸{{checkout.tip}}</span>
+          </div>
+            <hr class="solid">
+            <div class="d-flex justify-content-between mt-2">
+              <span>Total </span> <span class="text-success">₸{{checkout.total}}</span>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

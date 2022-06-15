@@ -1,0 +1,133 @@
+<div class="row pt-4">
+    <div class="col-8">
+        <h2>{{fundraising.title}}</h2>
+    </div>
+</div>
+<div class="row pt-3">
+    <div class="col-8">
+        <div class="card border-0">
+            <img class="card-img-bottom rounded" src="{{fundraising.imagePath}}" alt="Card image cap">
+        </div>
+        <div class="card border-0">
+            <div class="card-header bg-transparent"> 
+                <span class="d-inline-block">
+                    <i class="bi bi-person-heart text-success" style="font-size: 1.5rem;"></i>
+                </span>
+                <span class="d-inline-block p-3">{{firstName}} is organising this fundraiser.</span>
+            </div>
+            <div class="card-header bg-transparent">
+                <span class="d-inline-block">Created {{ getDateAgo(fundraising.date) }}</span>
+                <span class="d-inline-block px-3">|</span>
+                <span class="d-inline-block btn">{{category}}</span>
+            </div>
+            <div class="card-body">{{fundraising.details}}</div>
+        </div>
+        <div class="card border-0 mt-4">
+            <div class="card-header bg-transparent">
+                <h4>Organizer</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-0 px-3"><i class="bi bi-person-heart text-success" style="font-size: 1.5rem;"></i></div>
+                    <div class="col">
+                        <div class="row"><b>{{firstName}} {{lastName}}</b></div>
+                        <div class="row">Organizer</div>
+                        <div class="row">{{fundraising.city}}</div>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-success float-right px-4" (click)="contact(fundraising.userid)">Contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0 mt-4">
+            <div class="card-header bg-transparent">
+                <h4>Words of support</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3" *ngFor="let donation of filterComment()">
+                    <div class="col-0 px-3"><i class="bi bi-person-heart text-success" style="font-size: 1.5rem;"></i></div>
+                    <div class="col">
+                        <div class="row"><b>{{donation.donater}} donated ₸{{donation.donation}}</b></div>
+                        <div class="row">{{donation.comment}}</div>
+                        <div class="row my-3"><small class="font-weight-light">{{getDateAgo(donation.date)}}</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card shadow-lg rounded border-0">
+            <div class="card-header bg-transparent border-0 mt-3">
+                <span class="d-inline-block"><h5>₸{{getCurrentTotal()}}</h5></span>
+                <span class="d-inline-block pl-2">raised out of ₸{{getAmount(fundraising.amount_goal)}} goal</span>
+                <input type="range" class="form-control-range" min="0" max="100" step="1" [value]="getTotalPercent()" disabled>
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn btn-info btn-lg btn-block shadow-sm">Share</button>
+                <button type="button" *ngIf="userLogged.userRole != 1 && fundraising.userid != userLogged._id" class="btn btn-warning btn-lg btn-block shadow-sm" (click)="onDonate(fundraising._id)">Donate Now</button>
+                <button type="button" routerLink="/editfundraising/{{fundraising._id}}" *ngIf = "_authService.loggedIn() && (userLogged.userRole == 1 || fundraising.userid == userLogged._id)" class="btn btn-success btn-lg btn-block shadow-sm">Edit</button>
+                <a type="button" *ngIf="fundraising.active && (userLogged.userRole == 1 || fundraising.userid == userLogged._id); else elseBlock" (click)="activateFundraising(fundraising._id,1)" class="btn btn-secondary btn-lg btn-block shadow-sm">Deactivate</a>
+                <ng-template #elseBlock>
+                  <a type="button" *ngIf="userLogged.userRole == 1 || fundraising.userid == userLogged._id" (click)="activateFundraising(fundraising._id,2)" class="btn btn-primary btn-lg btn-block shadow-sm">Activate</a>
+                </ng-template>
+                <ul class="list-group list-group-flush" *ngIf="donations.length > 0">
+                    <li class="list-group-item" style="color: #6E2F91;">
+                        <span class="d-inline-block">
+                            <i class="bi bi-arrow-up-right-circle" style="font-size: 2rem;"></i>
+                        </span>
+                        <span class="d-inline-block pl-3"><b>{{donations.length}} donations</b></span>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-0 px-3"><i class="bi bi-person-heart" style="font-size: 2rem;"></i></div>
+                            <div class="col">
+                                <div class="row">{{getResentDonation().donater}}</div>
+                                <div class="row">
+                                    <span class="d-inline-block"><b>₸{{getResentDonation().donation}}
+                                    </b></span>
+                                    <span class="d-inline-block px-3">|</span>
+                                    <span class="d-inline-block">Resent donation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-0 px-3"><i class="bi bi-person-heart" style="font-size: 2rem;"></i></div>
+                            <div class="col">
+                                <div class="row">{{getTopDonation().donater}}</div>
+                                <div class="row">
+                                    <span class="d-inline-block"><b>₸{{getTopDonation().donation}}</b></span>
+                                    <span class="d-inline-block px-3">|</span>
+                                    <span class="d-inline-block">Top donation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-0 px-3"><i class="bi bi-person-heart text-success" style="font-size: 2rem;"></i></div>
+                            <div class="col">
+                                <div class="row">{{getFirstDonation().donater}}</div>
+                                <div class="row">
+                                    <span class="d-inline-block"><b>₸{{getFirstDonation().donation}}
+                                    </b></span>
+                                    <span class="d-inline-block px-3">|</span>
+                                    <span class="d-inline-block">First donation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer bg-transparent border-0 mb-3"  *ngIf="donations.length > 0">
+                <button type="button" class="btn btn-outline-success px-4" (click)="open(1)"><b>See all</b></button>
+                <button type="button" class="btn btn-outline-info float-right px-3" (click)="open(2)">
+                    <i class="bi bi-star"></i><b class="ml-2">See top donations</b>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+  

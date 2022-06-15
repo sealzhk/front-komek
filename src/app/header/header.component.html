@@ -1,0 +1,40 @@
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #A1CCDE;">
+    <a class="navbar-brand" routerLink="/home">Kömek</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item" *ngIf = "_authService.loggedIn() && user.userRole == 1">
+          <a class="nav-link" type="button" routerLink="/admin">Dashboard</a>
+        </li>
+        <li>
+          <div class="dropdown">
+            <a class="nav-link" type="button">Categories</a>
+            <div class="dropdown-content borderless rounded">
+              <ul class="list-unstyled" *ngFor="let category of categories">
+                <li><a href="/category/{{category._id}}">{{category.name}}</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item" *ngIf = "_authService.loggedIn()">
+          <a class="nav-link" type="button" (click)="onSelectProfile()">{{user.firstname}}</a>
+        </li>
+        <li class="nav-item" *ngIf = '!_authService.loggedIn()'>
+          <a class="nav-link" type="button" routerLink="/signin" routerLinkActive="active">Sign In</a>
+        </li>
+        <li class="nav-item" *ngIf = "!_authService.loggedIn()">
+          <a class="nav-link" type="button" routerLink="/signup" routerLinkActive="active">Sign Up</a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link" type="button" routerLink="/about">About Us</a>
+        </li>
+        <li class="nav-item" *ngIf = "_authService.loggedIn()">
+          <a class="nav-link" type="button" (click)="_authService.logoutUser()">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  

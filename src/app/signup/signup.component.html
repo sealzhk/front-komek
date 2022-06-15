@@ -1,0 +1,73 @@
+<div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card shadow-lg rounded border-0 text-center">
+      <div class="card-header bg-transparent">
+        <h2 class="mb-0 py-2">Sign Up</h2>
+      </div>
+      <div class="card-body m-3">
+        <form class="form" [formGroup]="regirstrForm">
+          <div class="form-group py-2">
+            <div class="row">
+              <div class="col">
+                <input type="text" #firstnameRef required class="form-control" placeholder="First Name" name="firstname" [(ngModel)]="registerUserData.firstname" formControlName="firstnameRef" [ngClass]="{'is-invalid': regirstrForm.get('firstnameRef').touched && regirstrForm.get('firstnameRef').invalid}">
+                <label class="text-danger" *ngIf="regirstrForm.get('firstnameRef').touched && regirstrForm.controls['firstnameRef'].hasError('required')">
+                  First name is required
+                </label>
+              </div>
+              <div class="col">
+                <input type="text" #lastnameRef class="form-control" placeholder="Last Name" name="lastname" formControlName="lastnameRef" [(ngModel)]="registerUserData.lastname" [ngClass]="{'is-invalid': regirstrForm.get('lastnameRef').touched && regirstrForm.get('lastnameRef').invalid}">
+                <label class="text-danger" *ngIf="regirstrForm.get('lastnameRef').touched && regirstrForm.controls['lastnameRef'].hasError('required')">
+                  Last name is required
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group py-2">
+            <input type="text" #emailRef required class="form-control"  placeholder="Email" name="email" [(ngModel)]="registerUserData.email" formControlName="emailRef" [ngClass]="{'is-invalid': regirstrForm.get('emailRef').touched && regirstrForm.controls['emailRef'].invalid}">
+            <label class="text-danger" *ngIf="regirstrForm.get('emailRef').touched && regirstrForm.controls['emailRef'].hasError('required')">
+              Email is required
+            </label>
+            <label class="text-danger" *ngIf="regirstrForm.controls['emailRef'].hasError('email')">
+              Enter a valid email address
+            </label>
+          </div>
+          <div class="form-group py-2">
+            <input type="password" #passRef required class="form-control" placeholder="Password" name="password" [(ngModel)]="registerUserData.password" formControlName="passRef" [ngClass]="{'is-invalid': regirstrForm.get('passRef').touched && regirstrForm.controls['passRef'].invalid}">
+            <div *ngIf="regirstrForm.get('passRef').touched && regirstrForm.get('passRef').invalid" class="invalid-feedback">
+              <label class="text-danger col" *ngIf="regirstrForm.controls['passRef'].hasError('required') || regirstrForm.controls['passRef'].hasError('minlength')">
+                Must be at least 8 characters
+              </label>
+              <label class="text-danger col" *ngIf="regirstrForm.controls['passRef'].hasError('required') || regirstrForm.controls['passRef'].hasError('hasNumber')">
+                Must contain at least 1 number
+              </label>
+              <label class="text-danger col" *ngIf="regirstrForm.controls['passRef'].hasError('required') || regirstrForm.controls['passRef'].hasError('hasCapitalCase')">
+                Must contain at least 1 in Capital Case
+              </label>
+              <label class="text-danger col" *ngIf="regirstrForm.controls['passRef'].hasError('required') || regirstrForm.controls['passRef'].hasError('hasSmallCase')">
+                Must contain at least 1 Letter in Small Case
+              </label>
+              <label class="text-danger col" *ngIf="regirstrForm.controls['passRef'].hasError('required') || regirstrForm.controls['passRef'].hasError('hasSpecialCharacters')">
+                Must contain at least 1 Special Character
+              </label>
+            </div>
+          </div>
+          <div class="form-group py-2">
+            <input type="password" #confPassRef required class="form-control" placeholder="Confirm password" name="confirmpassword" formControlName="confPassRef" [ngClass]="{'is-invalid': regirstrForm.get('confPassRef').touched && regirstrForm.controls['confPassRef'].invalid}">
+            <label class="text-danger" *ngIf="regirstrForm.get('confPassRef').touched && regirstrForm.controls['confPassRef'].hasError('required')">
+              Password is required
+            </label>
+            <label class="text-danger" *ngIf="regirstrForm.controls['confPassRef'].hasError('mustMatch')">
+              Password do not match
+            </label>
+          </div>
+          <button (click)="registerUser()" type="button" class="btn btn-outline-info mt-4" [disabled]="!regirstrForm.valid">Sign up to Kömek</button>
+        </form>
+      </div>
+      <div class="card-footer bg-transparent">
+        <p class="text-center">Kömek’s fee is 5% from each donation you receive. By continuing, you agree to the Kömek
+          <a href="#" class="link-success">terms</a> and acknowledge receipt of our
+          <a href="#" class="link-success">privacy policy</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>

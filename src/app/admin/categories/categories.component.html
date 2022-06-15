@@ -1,0 +1,41 @@
+<div style="height: 100%">
+    <div class="centered">
+      <div class="header">
+        <div class="headerComp"><h3>Categories</h3></div>
+        <div class="headerComp" style="float: right; margin-right: 20px">
+            <a [routerLink]="['/createcategory']" class="badge badge-primary">Add New Category</a>
+        </div>
+      </div>
+      <div class="container">
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Number of fundraisings</th>
+                <th scope="col">Active</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let category of categories; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td><a href="/category/{{category._id}}">{{category.name}}</a></td>
+                <td>{{category.fundraisings.length}}</td>
+                <td>{{category.active}}</td>
+                <td>
+                    <a type="button" (click)="deleteCategory(category._id)" class="badge badge-danger mr-2">delete</a>
+                    <a type="button" href="editcategory/{{category._id}}" class="badge badge-success mr-2">edit</a>
+                    <a type="button" *ngIf="category.active; else elseBlock" (click)="activateCategory(category._id,1)" class="badge badge-secondary">deactivate</a>
+                    <ng-template #elseBlock>
+                      <a type="button" (click)="activateCategory(category._id,2)" class="badge badge-primary">activate</a>
+                    </ng-template>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  

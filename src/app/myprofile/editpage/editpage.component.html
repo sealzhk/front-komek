@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="container-sm mx-auto my-5 pb-3 rounded shadow-lg" style="width: 50%">
+    <h1 class="py-3" style="text-align: center">Edit profile</h1>
+    <hr class="pb-2" style="width: 80%">
+    <div class="form-group d-flex justify-content-center">
+      <input type="file" class="form-control-file btn mb-4" name="image" id="photo" (change) = "selectImage($event)" [(ngModel)]="user.imagePath">
+    </div>
+    <div class="mx-3 pb-4">
+      <form class="form" [formGroup]="editPageForm">
+        <div class="form-group mb-5">
+          <label for="firstname">First name</label>
+          <input required type="firstname" #firstnameRef class="form-control" placeholder="Enter firstname" id="firstname" [value]="user.firstname" formControlName="emailRef" name="firstname" [(ngModel)]="user.firstname" formControlName="firstnameRef" [ngClass]="{'is-invalid': editPageForm.get('firstnameRef').touched && editPageForm.get('firstnameRef').invalid}">
+          <label class="text-danger" *ngIf="editPageForm.get('firstnameRef').touched && editPageForm.controls['firstnameRef'].hasError('required')">
+            First name is required
+          </label>
+        </div>
+        <div class="form-group mb-5">
+          <label for="lastname">Last name</label>
+          <input required type="lastname" #lastnameRef class="form-control" placeholder="Enter lastname" id="lastname" [value]="user.lastname" formControlName="emailRef" name="lastname" formControlName="lastnameRef" [(ngModel)]="user.lastname" [ngClass]="{'is-invalid': editPageForm.get('lastnameRef').touched && editPageForm.get('lastnameRef').invalid}">
+          <label class="text-danger" *ngIf="editPageForm.get('lastnameRef').touched && editPageForm.controls['lastnameRef'].hasError('required')">
+            Last name is required
+          </label>
+        </div>
+        <div class="form-group mb-5" *ngIf="user._id === undefined">
+          <label for="email">Email</label>
+          <input required type="text" #emailRef class="form-control" placeholder="Enter email" id="email" name="email" [(ngModel)]="user.email" email="true" formControlName="emailRef" [ngClass]="{'is-invalid': editPageForm.get('emailRef').touched && editPageForm.controls['emailRef'].invalid}">
+          <label class="text-danger" *ngIf="editPageForm.get('emailRef').touched && editPageForm.controls['emailRef'].hasError('required')">
+            Email is required
+          </label>
+          <label class="text-danger" *ngIf="editPageForm.controls['emailRef'].hasError('email')">
+            Enter a valid email address
+          </label>
+        </div>
+        <div class="form-group mb-5" *ngIf="user._id === undefined">
+          <label for="password">Password</label>
+          <input required type="password" #passRef class="form-control" id="password" placeholder="Enter password" name="password" [(ngModel)]="user.password" formControlName="passRef" [ngClass]="{'is-invalid': editPageForm.get('passRef').touched && editPageForm.controls['passRef'].invalid}">
+          <div *ngIf="editPageForm.get('passRef').touched && editPageForm.get('passRef').invalid" class="invalid-feedback">
+            <label class="text-danger col" *ngIf="editPageForm.controls['passRef'].hasError('required') || editPageForm.controls['passRef'].hasError('minlength')">
+              Must be at least 8 characters
+            </label>
+            <label class="text-danger col" *ngIf="editPageForm.controls['passRef'].hasError('required') || editPageForm.controls['passRef'].hasError('hasNumber')">
+              Must contain at least 1 number
+            </label>
+            <label class="text-danger col" *ngIf="editPageForm.controls['passRef'].hasError('required') || editPageForm.controls['passRef'].hasError('hasCapitalCase')">
+              Must contain at least 1 in Capital Case
+            </label>
+            <label class="text-danger col" *ngIf="editPageForm.controls['passRef'].hasError('required') || editPageForm.controls['passRef'].hasError('hasSmallCase')">
+              Must contain at least 1 Letter in Small Case
+            </label>
+            <label class="text-danger col" *ngIf="editPageForm.controls['passRef'].hasError('required') || editPageForm.controls['passRef'].hasError('hasSpecialCharacters')">
+              Must contain at least 1 Special Character
+            </label>
+          </div>
+        </div>
+        <div class="form-group mb-5">
+          <label for="dateofbirth">Date of birth</label>
+          <input required type="dateofbirth" #dateofbirthRef class="form-control" placeholder="Enter date of birth" id="dateofbirth" [value]="user.birthday" name="birthday" [(ngModel)]="user.birthday" formControlName="dateofbirthRef" [ngClass]="{'is-invalid': editPageForm.get('dateofbirthRef').touched && editPageForm.controls['dateofbirthRef'].invalid}">
+          <label class="text-danger" *ngIf="editPageForm.get('dateofbirthRef').touched && editPageForm.controls['dateofbirthRef'].hasError('required')">
+            Date of birth is required
+          </label>
+        </div>
+        <label>Gender</label>
+        <div class="row mb-2 d-flex justify-content-center">
+          <select class="form-control my-3" style="width: 80%" [(ngModel)]="selectedValue" (change)="onChangeSelect($event)">
+            <option name="gender" [value] = "1">Male</option>
+            <option name="gender" [value] = "2">Female</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a class="btn mb-4" *ngIf="user._id === undefined; else elseBlock1" (click)="createUser()" role="button" style="background-color: #E5E5E5; width: 25%">Create</a>
+      <ng-template #elseBlock1>
+        <a class="btn mb-4" (click)="updateProfileData()" role="button" style="background-color: #E5E5E5; width: 25%">Save</a>
+      </ng-template>
+      <a class="btn ml-2 mb-4" (click)="onSelectProfile()" role="button" style="background-color: #E5E5E5; width: 25%">Go Back</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="container-sm mx-auto my-5 pb-3 rounded shadow-lg" style="width: 50%">
+      <h1 class="py-3" style="text-align: center">Edit category</h1>
+      <hr class="pb-2" style="width: 80%">
+      <div class="form-group d-flex justify-content-center">
+        <input type="file" class="form-control-file btn mb-4" name="image" id="photo" (change) = "selectImage($event)" [(ngModel)]="category.imagePath">
+      </div>
+      <div class="mx-3 pb-4">
+        <form class="form">
+          <div class="form-group mb-5">
+            <label for="name">Category Name</label>
+            <input required type="text" class="form-control" placeholder="Enter category name" id="name" [value]="category.name" name="name" [(ngModel)]="category.name">
+          </div>
+          <div class="form-group mb-5">
+            <label for="details">Description</label>
+            <textarea class="form-control" #desRef="ngModel" required class="form-control" name="details" id="description" [value]="category.details" [(ngModel)]="category.details" rows="10" placeholder="Description"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a class="btn mb-4" *ngIf="category._id === undefined; else elseBlock1" (click)="createCategory()" role="button" style="background-color: #E5E5E5; width: 25%">Create</a>
+        <ng-template #elseBlock1>
+            <a class="btn mb-4" (click)="updateCategoryData()" role="button" style="background-color: #E5E5E5; width: 25%">Save</a>
+        </ng-template>
+        <a class="btn ml-2 mb-4" (click)="goBack()" role="button" style="background-color: #E5E5E5; width: 25%">Go Back</a>
+      </div>
+    </div>
+  </div>

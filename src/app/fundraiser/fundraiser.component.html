@@ -1,0 +1,72 @@
+<div class="row pt-5">
+    <div class="col-md-6 mx-auto">
+      <div class="card shadow-lg rounded border-0 text-center">
+        <div class="card-header bg-transparent">
+          <h2 class="mb-0 py-2" *ngIf="fundraiser._id === undefined; else elseBlock2">Start Fundraising</h2>
+          <ng-template #elseBlock2>
+            <h2 class="mb-0 py-2">Edit Fundraising</h2>
+          </ng-template>
+        </div>
+        <div class="card-body m-3">
+          <form class="form">
+            <div class="form-group py-2">
+              <label class="label" for="title">Title of your fundraising</label>
+              <input type="text" #titleRef="ngModel" required class="form-control" placeholder="Title" name="title" id="title" [value]="fundraiser.title" [(ngModel)]="fundraiser.title" >
+              <div [hidden]="titleRef.valid || titleRef.pristine" class="alert alert-danger">Title is required</div>
+            </div>
+            <div class="form-group py-2">
+              <label class="label" for="description">Description of fundraising</label>
+              <textarea class="form-control" #desRef="ngModel" required class="form-control" name="details" id="description" [value]="fundraiser.details" [(ngModel)]="fundraiser.details" rows="10" placeholder="Description"></textarea>
+              <div [hidden]="desRef.valid || desRef.pristine" class="alert alert-danger">Description is required</div>
+            </div>
+            <div class="form-group">
+              <label class="label3" for="Category">What are you fundraising for?</label>
+              <select class="form-control" [(ngModel)]="selectedValue" (change)="onChangeSelect($event)">
+                <option *ngFor="let category of filterCategories()" name="categoryid" [value]="category._id">{{category.name}}</option>
+              </select>
+            </div>
+            <div class="form-group py-2">
+              <label class="label" for="city">Which city do you live?</label>
+              <input type="city" #cityRef="ngModel"  required class="form-control" placeholder="City" name="city" id="city" [value]="fundraiser.city" [(ngModel)]="fundraiser.city">
+              <div [hidden]="cityRef.valid || cityRef.pristine" class="alert alert-danger">City</div>
+            </div>
+              <div class="form-group">
+                <label class="label5" for="photo">Upload photo</label>
+                <input type="file" class="form-control-file" name="image" id="photo" (change) = "selectImage($event)">
+              </div>
+            <div class="form-group py-2">
+              <label class="label4">Goal amount for your fundraising</label>
+              <input id="cc-number" type="number" #amountRef="ngModel" required class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="₸ " name="amount_goal" [value]="fundraiser.amount_goal" [(ngModel)]="fundraiser.amount_goal">
+              <div [hidden]="amountRef.valid || amountRef.pristine" class="alert alert-danger">Goal amount is required</div>
+            </div>
+            <div class="container p-0">
+              <div class="card px-4">
+                <p class="h8 py-3">Card Details</p>
+                <div class="row gx-3">
+                  <div class="col-12">
+                    <div class="d-flex flex-column">
+                      <p class="label1">Person Name</p>
+                      <input class="form-control mb-3" type="text" placeholder="First and Last Name" name="card_holder" [value]="fundraiser.card_holder" [(ngModel)]="fundraiser.card_holder">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex flex-column">
+                      <p class="label1">Card Number</p>
+                      <input class="form-control mb-3" type="text" minlength="19" maxlength="19" #cardRef="ngModel" placeholder="•••• •••• •••• ••••" name="card_num" 
+                             [value]="fundraiser.card_num" [(ngModel)]="fundraiser.card_num" (ngModelChange)="onChangeCard($event)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button *ngIf="fundraiser._id === undefined; else elseBlock1" (click)="createFundraising()" type="button" class="btn btn-outline-info mt-4">Create a fundraising</button>
+            <ng-template #elseBlock1>
+              <button (click)="updateFundraising()" type="button" class="btn btn-outline-info mt-4">Save</button>
+            </ng-template>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

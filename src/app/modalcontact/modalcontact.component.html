@@ -1,0 +1,28 @@
+<div class="modal-header shadow-sm">
+    <h5 class="modal-title">Write a message</h5>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="activeModal.dismiss('Cross click')">Close</button>
+  </div>
+  <div class="modal-body overflow-auto" style="height: 400px;">
+    <div class="row mb-3">
+        <div class="col-0 px-3"><i class="bi bi-person-heart text-success" style="font-size: 1.5rem;"></i></div>
+        <div class="col">
+            <div class="row"><b>{{message.receiver}}</b></div>
+            <div class="row">Organizer</div>
+        </div>
+    </div>
+    <form class="form">
+        <div class="form-group py-2">
+            <input type="text" #emailRef="ngModel" required class="form-control"  placeholder="Your name" name="sender" [(ngModel)]="message.sender">
+        </div>
+        <div class="form-group py-2">
+            <input type="text" #passRef="ngModel" required class="form-control" placeholder="Your email" name="from_email" [(ngModel)]="message.from_email">
+        </div> 
+        <div class="form-group py-2">
+            <textarea class="form-control" #desRef="ngModel" required class="form-control" name="message" id="message" [(ngModel)]="message.message" rows="5" placeholder="Your message"></textarea>
+            <div [hidden]="desRef.valid || desRef.pristine" class="alert alert-danger">Message is required</div>
+          </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a type="button" class="btn btn-success btn-lg btn-block shadow-sm" (click)="sendMessage()">Send message</a>
+</div>

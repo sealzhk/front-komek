@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="container-sm mx-auto my-5 rounded shadow-lg" style="width: 50%">
+      <h1 class="py-3" style="text-align: center">Change password</h1>
+      <hr class="pb-2" style="width: 80%">
+      <div class="mx-3 pb-4">
+        <form class="form">
+          <div class="form-group mb-5">
+            <label for="currentpass">Current password</label>
+            <input required type="password" #curPass="ngModel" class="form-control" placeholder="Enter current password" id="currentpass" name="oldPass" [(ngModel)]="checkingPass.oldPass">
+            <div [hidden]="curPass.valid || curPass.pristine" class="alert alert-danger">Password is required</div>
+          </div>
+          <div class="form-group mb-5">
+            <label for="newpass">New password</label>
+            <input required type="password" #newPass="ngModel" class="form-control" placeholder="Enter new password" id="newpass" name="newPass" [(ngModel)]="checkingPass.newPass">
+            <div [hidden]="newPass.valid || newPass.pristine" class="alert alert-danger">Password is required</div>
+          </div>
+          <div class="form-group mb-5">
+            <label for="newpassagain">New password again</label>
+            <input required type="password" #newPassAgain="ngModel" class="form-control" placeholder="Enter new password again" id="newpassagain" name="newPassAgain" [(ngModel)]="checkingPass.newPassAgain">
+            <div [hidden]="newPassAgain.valid || newPassAgain.pristine" class="alert alert-danger">Password is required</div>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a class="btn mb-4" (click)="updatePasswordData()" role="button" style="background-color: #E5E5E5; width: 25%">Change</a>
+        <a class="btn ml-2 mb-4" (click)="onSelectProfile()" role="button" style="background-color: #E5E5E5; width: 25%">Go Back</a>
+      </div>
+    </div>
+  </div>

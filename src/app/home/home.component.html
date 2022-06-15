@@ -1,0 +1,71 @@
+<div id="carouselExampleControls" class="carousel slide mt-0" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="https://i.postimg.cc/brYd64fR/sick.jpg" alt="First slide">
+        <div class="centered-text">Qaiyrymdylyq jasasañ,
+            Qaiyryn özıñ köresıñ</div>
+          <button class="btn-start shadow-lg" routerLink="/fundraiser">Start Fundraising</button>
+      </div>
+    </div>
+</div>
+<hr>
+<h3 class="text">Top Fundraisers</h3>
+<div class="row mt-5 mb-5">
+    <div class="col-4 mb-3" *ngFor="let fundraising of filterFundraisings() | slice:0:3;">
+        <div class="card shadow-lg rounded justify-content-center" style="width: 18rem;">
+            <img class="card-img-top" src="{{fundraising.imagePath}}" alt="Card image cap">
+            <div class="card-body" style="height: 10rem;">
+              <h5 class="card-title">{{fundraising.title | slice: 0: 22}}<b *ngIf="fundraising.title.length > 22">....</b></h5>
+              <p class="card-text">{{fundraising.details | slice: 0: 85}}<i *ngIf="fundraising.details.length > 85">...</i></p>
+            </div>
+            <div class="card-footer">
+            <p>Last donation {{getLastDonationDate(fundraising._id)}}</p>
+            <p class="txt">₸{{getDonationSum(fundraising._id)}} raised of ₸{{getAmount(fundraising.amount_goal)}}</p>
+            <input type="range" class="form-control-range" min="0" max="100" step="1" [value]="getTotalPercent(fundraising._id,fundraising.amount_goal)" disabled>
+            </div>
+            <a href="/fundraising/{{fundraising._id}}" class="stretched-link"></a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="diff">
+  <h3 style="text-align:center;">Which categories interest you?</h3>
+  <div class="card-group">
+    <div class="card border-0" *ngFor="let category of categories | slice:0:3;">
+      <div class="card-body">
+        <h5 class="card-title" style="text-align:center;">{{category.name}}</h5>
+        <div style="height: 10rem;">
+          <p class="card-text">{{category.details}}</p>
+        </div>
+        <a href="/category/{{category._id}}" class="btn btn-primary">Learn more</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="diff">
+  <h3 style="text-align:center;">First fundraising site in Kazakhstan</h3><br><br>
+  <div class="card-group">
+    <div class="card border-0">
+      <img src="https://raw.githubusercontent.com/AidaS00/komek/c4feade9710478d728d4f660b71176a753f3bef3/src/assets/images.svg" class="card-img-top infos" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" style="text-align:center;">SHARE VISUALS</h5>
+        <p class="card-text">Upload multiple photos and videos of your pet, animal shelter, disease, startup or related cause to show donors exactly where their contributions are going. </p>
+      </div>
+    </div>
+    <div class="card border-0">
+      <img src="https://raw.githubusercontent.com/AidaS00/komek/c4feade9710478d728d4f660b71176a753f3bef3/src/assets/envelope-open.svg" class="card-img-top infos" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" style="text-align:center;">TELL YOUR STORY</h5>
+        <p class="card-text">No two fundraising campaigns are alike, but you can help yours stand out by telling donors why your cause, animal cause or project is unique. Tell your story (or your pet’s story!) to help donors connect better to your campaign.</p>
+      </div>
+    </div>
+    <div class="card border-0">
+      <img src="https://raw.githubusercontent.com/AidaS00/komek/c4feade9710478d728d4f660b71176a753f3bef3/src/assets/signal.svg" class="card-img-top infos" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" style="text-align:center;">GET SOCIAL</h5>
+        <p class="card-text">The best way to raise money and awareness for your fundraising campaign is to share it on social media. Obviously, you don’t want to overwhelm your followers with a ton of posts, but you should share your campaign’s URL often.</p>
+      </div>
+    </div>
+  </div>
+</div>

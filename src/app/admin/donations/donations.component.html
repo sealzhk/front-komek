@@ -1,0 +1,43 @@
+<div style="height: 100%">
+    <div class="centered">
+      <div class="header">
+        <div class="headerComp"><h3>Donations</h3></div>
+      </div>
+      <div class="container">
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Donater</th>
+                <th scope="col">Fundraising</th>
+                <th scope="col">Total</th>
+                <th scope="col">Donation</th>
+                <th scope="col">Tip</th>
+                <th scope="col">Donated Date</th>
+                <th scope="col">Updated Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let donation of donations; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td><a href="/user/{{donation.user._id}}">{{donation.user.email}}</a></td>
+                <td><a href="/fundraising/{{donation.fundraising._id}}">{{donation.fundraising.title}}</a></td>
+                <td>₸{{donation.total}}</td>
+                <td>₸{{donation.donation}}</td>
+                <td>₸{{donation.tip}}</td> 
+                <td>{{getDate(donation.date) | date: 'dd/MM/yyyy'}}</td>
+                <td>{{getDate(donation.upd_date) | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                    <span *ngIf="donation.total == 0; else elseBlock" class="badge badge-pill badge-light">annuled</span>
+                    <ng-template #elseBlock>
+                        <a type="button" (click)="annulDonation(donation._id)" class="badge badge-danger mr-2">annul</a>
+                    </ng-template>    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  

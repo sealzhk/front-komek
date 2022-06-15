@@ -1,0 +1,47 @@
+<div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card shadow-lg rounded border-0 text-center">
+      <div class="card-header bg-transparent">
+        <h2 class="mb-0 py-2">Sign In</h2>
+      </div>
+      <div class="card-body m-3">
+        <form class="form" [formGroup]="loginForm">
+          <div class="form-group py-2">
+            <input type="text" #emailRef required class="form-control"  placeholder="Email" name="email" [(ngModel)]="loginUserData.email" formControlName="emailRef" [ngClass]="{'is-invalid': loginForm.get('emailRef').touched && loginForm.controls['emailRef'].invalid}">
+            <label class="text-danger" *ngIf="loginForm.get('emailRef').touched && loginForm.controls['emailRef'].hasError('required')">
+              Email is required
+            </label>
+            <label class="text-danger" *ngIf="loginForm.controls['emailRef'].hasError('email')">
+              Enter a valid email address
+            </label>
+          </div>
+          <div class="form-group">
+            <input type="password" #passRef required class="form-control" placeholder="Password" name="password" [(ngModel)]="loginUserData.password" formControlName="passRef" [ngClass]="{'is-invalid': loginForm.get('passRef').touched && loginForm.controls['passRef'].invalid}">
+            <div *ngIf="loginForm.get('passRef').touched && loginForm.get('passRef').invalid" class="invalid-feedback">
+              <label class="text-danger col" *ngIf="loginForm.controls['passRef'].hasError('required') || loginForm.controls['passRef'].hasError('minlength')">
+                Must be at least 8 characters
+              </label>
+              <label class="text-danger col" *ngIf="loginForm.controls['passRef'].hasError('required') || loginForm.controls['passRef'].hasError('hasNumber')">
+                Must contain at least 1 number
+              </label>
+              <label class="text-danger col" *ngIf="loginForm.controls['passRef'].hasError('required') || loginForm.controls['passRef'].hasError('hasCapitalCase')">
+                Must contain at least 1 in Capital Case
+              </label>
+              <label class="text-danger col" *ngIf="loginForm.controls['passRef'].hasError('required') || loginForm.controls['passRef'].hasError('hasSmallCase')">
+                Must contain at least 1 Letter in Small Case
+              </label>
+              <label class="text-danger col" *ngIf="loginForm.controls['passRef'].hasError('required') || loginForm.controls['passRef'].hasError('hasSpecialCharacters')">
+                Must contain at least 1 Special Character
+              </label>
+            </div>
+          </div>
+          <button (click)="loginUser()" type="button" class="btn btn-outline-info mt-4">Sign in to Kömek</button>
+          // [disabled]='!loginForm.valid'
+        </form>
+      </div>
+      <div class="card-footer bg-transparent">
+        <p class="text-center"><a href="#" class="text-danger">Forgot your password?</a></p>
+      </div>
+    </div>
+  </div>
+</div>

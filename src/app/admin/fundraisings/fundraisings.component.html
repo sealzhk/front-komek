@@ -1,0 +1,46 @@
+<div style="height: 100%">
+    <div class="centered">
+      <div class="header">
+        <div class="headerComp"><h3>Fundraisings</h3></div>
+        <div class="headerComp" style="float: right; margin-right: 20px">
+            <a [routerLink]="['/fundraiser']" class="badge badge-primary">Add New Fundraising</a>
+        </div>
+      </div>
+      <div class="container">
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Creator</th>
+                <th scope="col">Category</th>
+                <th scope="col">Amount Goal</th>
+                <th scope="col">Raised</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fundraising of fundraisings; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td><a href="/fundraising/{{fundraising._id}}">{{fundraising.title}}</a></td>
+                <td><a href="/user/{{fundraising.user._id}}">{{fundraising.user.email}}</a></td>
+                <td><a href="/category/{{fundraising.category._id}}">{{fundraising.category.name}}</a></td>
+                <td>₸{{getAmount(fundraising.amount_goal)}}</td>
+                <td>₸{{getDonationSum(fundraising.donations)}}</td>
+                <td>{{getDate(fundraising.date) | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                    <a type="button" (click)="deleteFundraising(fundraising._id)" class="badge badge-danger mr-2">delete</a>
+                    <a type="button" href="editfundraising/{{fundraising._id}}" class="badge badge-success mr-2">edit</a>
+                    <a type="button" *ngIf="fundraising.active; else elseBlock" (click)="activateFundraising(fundraising._id,1)" class="badge badge-secondary">deactivate</a>
+                    <ng-template #elseBlock>
+                      <a type="button" (click)="activateFundraising(fundraising._id,2)" class="badge badge-primary">activate</a>
+                    </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,26 @@
+<div class="modal-header shadow-sm">
+    <h6 class="modal-title" *ngIf="type == '2'">Top Donations (greater than ₸100K)</h6>
+    <h6 class="modal-title" *ngIf="type == '1'">{{donations.length}} donations</h6>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="activeModal.dismiss('Cross click')">Close</button>
+  </div>
+  <div class="modal-body overflow-auto" style="height: 400px;">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let donation of filterDonations()">
+          <div class="row">
+              <div class="col-0 px-3"><i class="bi bi-person-heart" style="font-size: 2rem;"></i></div>
+              <div class="col">
+                  <div class="row">{{donation.donater}}</div>
+                  <div class="row">
+                      <span class="d-inline-block"><b>₸{{donation.donation}}
+                      </b></span>
+                      <span class="d-inline-block px-3">|</span>
+                      <span class="d-inline-block">{{getDateAgo(donation.date)}}</span>
+                  </div>
+              </div>
+          </div>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer" *ngIf = "userLogged.userRole != 1 && fundraising.userid != userLogged._id">
+    <a type="button" class="btn btn-warning btn-lg btn-block shadow-sm" href="/donate/{{id}}">Donate Now</a>
+  </div>
